@@ -53,11 +53,11 @@ spec:
                   key: postgres_password
           resources:
             requests:
-              memory: "100Mi"
-              cpu: "100m"
-            limits:
               memory: "200Mi"
               cpu: "200m"
+            limits:
+              memory: "250Mi"
+              cpu: "250m"
           livenessProbe:
             httpGet:
               path: /device-mock/actuator/health/liveness

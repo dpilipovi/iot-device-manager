@@ -17,12 +17,12 @@ spec:
         app: message-processor
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "8180"
+        prometheus.io/port: "8081"
         prometheus.io/path: "/message-processor/actuator/prometheus"
         prometheus.io/scheme: "http"
     spec:
       containers:
-        - image: dpilipovic98/iot-device-manager-message-processor:0.0.1-SNAPSHOT
+        - image: dpilipovic98/iot-device-manager-message-processor:0.0.1
           name: message-processor
           env:
             - name: SPRING_PROFILES_ACTIVE
@@ -61,14 +61,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /message-processor/actuator/health/liveness
-              port: 8180
+              port: 8081
             initialDelaySeconds: 60
             periodSeconds: 20
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /message-processor/actuator/health/readiness
-              port: 8180
+              port: 8081
             initialDelaySeconds: 60
             periodSeconds: 20
             failureThreshold: 5
@@ -80,7 +80,7 @@ metadata:
   namespace: iot-device-manager
 spec:
   ports:
-    - port: 8180
-      targetPort: 8180
+    - port: 8081
+      targetPort: 8081
   selector:
     app: message-processor

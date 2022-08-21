@@ -22,7 +22,7 @@ spec:
         prometheus.io/scheme: "http"
     spec:
       containers:
-        - image: dpilipovic98/iot-device-manager-api:0.0.7-SNAPSHOT
+        - image: dpilipovic98/iot-device-manager-api:0.0.1
           name: api-application-application
           env:
             - name: SPRING_PROFILES_ACTIVE

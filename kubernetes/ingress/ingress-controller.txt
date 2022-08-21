@@ -1,0 +1,2 @@
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install nginx-ingress bitnami/nginx-ingress-controller --set service.nodePorts.http=32080 --set defaultBackend.enabled=false --set ingressClassResource.name=nginx-iot-device-manager --set ingressClassResource.controllerClass=k8s.io/ingress-nginx-iot-device-manager -n iot-device-manager

@@ -1,0 +1,20 @@
+management.endpoints.web.base-path: /device-mock/actuator
+
+spring.datasource:
+  driver-class-name: org.postgresql.Driver
+  url: jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}
+  username: ${POSTGRES_USER}
+  password: ${POSTGRES_PASSWORD}
+  #url: jdbc:postgresql://postgres:5432/iot-device-manager?ApplicationName=device-mock
+  #username: iot-device-manager
+  #password: iot-device-manager
+
+spring.rabbitmq:
+  host: rabbitmq
+  port: 5672
+  virtual-host: iot-device-manager
+  username: admin
+  password: password
+  listener.simple.concurrency: 1
+
+mock.device.base.url: http://mock-device:8180/mock/device/

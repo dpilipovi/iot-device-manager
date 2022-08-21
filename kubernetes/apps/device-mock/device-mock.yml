@@ -1,0 +1,86 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: device-mock
+  name: device-mock
+  namespace: iot-device-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: device-mock
+  template:
+    metadata:
+      labels:
+        app: device-mock
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8180"
+        prometheus.io/path: "/device-mock/actuator/prometheus"
+        prometheus.io/scheme: "http"
+    spec:
+      containers:
+        - image: dpilipovic98/iot-device-manager-device-mock:0.0.1-SNAPSHOT
+          name: device-mock
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: TZ
+              value: Europe/Zagreb
+            - name: JAVA_TOOL_OPTIONS
+              value: -XX:MaxRAMPercentage=90 -XX:InitialRAMPercentage=80 -XX:MinRAMPercentage=70
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-conf
+                  key: host
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-conf
+                  key: name
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres_password
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
+            limits:
+              memory: "200Mi"
+              cpu: "200m"
+          livenessProbe:
+            httpGet:
+              path: /device-mock/actuator/health/liveness
+              port: 8180
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /device-mock/actuator/health/readiness
+              port: 8180
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            failureThreshold: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: device-mock
+  namespace: iot-device-manager
+spec:
+  ports:
+    - port: 8180
+      targetPort: 8180
+  selector:
+    app: device-mock

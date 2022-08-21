@@ -1,0 +1,68 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-application
+  namespace: iot-device-manager
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api-application
+            pathType: Prefix
+            backend:
+              service:
+                name: api-application
+                port:
+                  number: 8080
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api-application
+                port:
+                  number: 8080
+  ingressClassName: nginx-iot-device-manager
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: device-mock
+  namespace: iot-device-manager
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /device-mock
+            pathType: Prefix
+            backend:
+              service:
+                name: device-mock
+                port:
+                  number: 8180
+          - path: /mock
+            pathType: Prefix
+            backend:
+              service:
+                name: device-mock
+                port:
+                  number: 8180
+  ingressClassName: nginx-iot-device-manager
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: message-processor
+  namespace: iot-device-manager
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /message-processor
+            pathType: Prefix
+            backend:
+              service:
+                name: message-processor
+                port:
+                  number: 8081
+  ingressClassName: nginx-iot-device-manager

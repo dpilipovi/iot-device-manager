@@ -16,5 +16,3 @@ spring.rabbitmq:
   username: admin
   password: password
   listener.simple.concurrency: 1
-
-mock.device.base.url: http://mock-device:8180/mock/device/

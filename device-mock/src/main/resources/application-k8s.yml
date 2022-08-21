@@ -5,9 +5,6 @@ spring.datasource:
   url: jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}
   username: ${POSTGRES_USER}
   password: ${POSTGRES_PASSWORD}
-  #url: jdbc:postgresql://postgres:5432/iot-device-manager?ApplicationName=device-mock
-  #username: iot-device-manager
-  #password: iot-device-manager
 
 spring.rabbitmq:
   host: rabbitmq
@@ -16,5 +13,3 @@ spring.rabbitmq:
   username: admin
   password: password
   listener.simple.concurrency: 1
-
-mock.device.base.url: http://mock-device:8180/mock/device/

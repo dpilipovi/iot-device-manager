@@ -1,0 +1,58 @@
+version: '3'
+services:
+
+  api-application:
+    build:
+      context: ../../
+      args:
+        - "APPLICATION=api"
+    ports:
+      - "8080:8080"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker-dev"
+
+  message-processor:
+    build:
+      context: ../../
+      args:
+        - "APPLICATION=message-processor"
+    ports:
+      - "8081:8081"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker-dev"
+
+  device-mock:
+    build:
+      context: ../../
+      args:
+        - "APPLICATION=device-mock"
+    ports:
+      - "8180:8180"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker-dev"
+
+  database:
+    image: postgres:12-alpine
+    container_name: 'iot-device-manager-database'
+    environment:
+      POSTGRES_USER: 'iot-device-manager'
+      POSTGRES_DB: 'iot-device-manager'
+      POSTGRES_PASSWORD: 'password'
+    ports:
+      - "5432:5432"
+    volumes:
+      - "iot-device-manager-database:/var/lib/postgresql/data"
+
+  rabbitmq:
+    build: images/rabbitmq
+    container_name: 'iot-device-manager-rabbitmq'
+    environment:
+      RABBITMQ_DEFAULT_USER: 'admin'
+      RABBITMQ_DEFAULT_PASS: 'password'
+      RABBITMQ_DEFAULT_VHOST: 'iot-device-manager'
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  iot-device-manager-database:

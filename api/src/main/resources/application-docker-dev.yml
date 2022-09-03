@@ -1,10 +1,11 @@
 spring.datasource:
-  url: jdbc:postgresql://localhost:5432/iot-device-manager?ApplicationName=api
+  url: jdbc:postgresql://database:5432/iot-device-manager?ApplicationName=api
   username: iot-device-manager
   password: password
 
 spring.rabbitmq:
-  addresses: localhost
+  host: rabbitmq
+  port: 5672
   virtual-host: iot-device-manager
   username: admin
   password: password

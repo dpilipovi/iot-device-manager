@@ -5,8 +5,10 @@ server:
 
 server.port: 8080
 
-spring.jpa.hibernate.ddl-auto: update
-spring.jpa.generate-ddl: true
+spring:
+  jpa:
+    hibernate.ddl-auto: update
+    properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
 
 management:
   endpoints.web.exposure.include: health, info, prometheus

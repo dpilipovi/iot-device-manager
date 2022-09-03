@@ -3,6 +3,11 @@ server:
     include-message: always
     include-binding-errors: always
 
+spring:
+  jpa:
+    hibernate.ddl-auto: update
+    properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+
 server.port: 8180
 
 management:

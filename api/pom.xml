@@ -5,11 +5,11 @@
   <parent>
     <artifactId>iot-device-manager</artifactId>
     <groupId>hr.dpilipovic</groupId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
   </parent>
 
   <artifactId>api</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <name>api</name>
   <description>api</description>
 
@@ -21,12 +21,12 @@
     <dependency>
       <groupId>hr.dpilipovic</groupId>
       <artifactId>common-data</artifactId>
-      <version>0.0.1</version>
+      <version>0.0.2</version>
     </dependency>
     <dependency>
       <groupId>hr.dpilipovic</groupId>
       <artifactId>common-rabbit</artifactId>
-      <version>0.0.1</version>
+      <version>0.0.2</version>
     </dependency>
 
     <dependency>

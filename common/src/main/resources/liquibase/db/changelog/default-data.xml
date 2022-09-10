@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet author="dpilipovic" id="default-data-20220910-01">
+    <!-- AIR CONDITIONER DATA -->
+    <insert tableName="air_conditioner">
+      <column name="id" valueSequenceNext="id_seq"/>
+      <column name="name" value="Samsung Air Conditioner 1"/>
+      <column name="device_status" value="OFF"/>
+      <column name="device_type" value="AIR_CONDITIONER"/>
+      <column name="temperature" valueNumeric="22"/>
+    </insert>
+    <insert tableName="air_conditioner">
+      <column name="id" valueSequenceNext="id_seq"/>
+      <column name="name" value="Samsung Air Conditioner 2"/>
+      <column name="device_status" value="OFF"/>
+      <column name="device_type" value="AIR_CONDITIONER"/>
+      <column name="temperature" valueNumeric="23"/>
+    </insert>
+    <!-- FRIDGE DATA -->
+    <insert tableName="fridge">
+      <column name="id" valueSequenceNext="id_seq"/>
+      <column name="name" value="Gorenje Fridge 1"/>
+      <column name="device_status" value="OFF"/>
+      <column name="device_type" value="FRIDGE"/>
+      <column name="temperature" valueNumeric="6"/>
+    </insert>
+    <insert tableName="fridge">
+      <column name="id" valueSequenceNext="id_seq"/>
+      <column name="name" value="Gorenje Fridge 2"/>
+      <column name="device_status" value="OFF"/>
+      <column name="device_type" value="FRIDGE"/>
+      <column name="temperature" valueNumeric="6"/>
+    </insert>
+    <!-- SMART TV DATA -->
+    <insert tableName="smart_tv">
+      <column name="id" valueSequenceNext="id_seq"/>
+      <column name="name" value="LG Smart TV 1"/>
+      <column name="device_status" value="OFF"/>
+      <column name="device_type" value="SMART_TV"/>
+      <column name="channel" valueNumeric="1"/>
+      <column name="recording_status" value="NOT_RECORDING"/>
+    </insert>
+    <insert tableName="smart_tv">
+      <column name="id" valueSequenceNext="id_seq"/>
+      <column name="name" value="LG Smart TV 2"/>
+      <column name="device_status" value="OFF"/>
+      <column name="device_type" value="SMART_TV"/>
+      <column name="channel" valueNumeric="1"/>
+      <column name="recording_status" value="NOT_RECORDING"/>
+    </insert>
+    <!-- VACUUM CLEANER DATA -->
+    <insert tableName="vacuum_cleaner">
+      <column name="id" valueSequenceNext="id_seq"/>
+      <column name="name" value="Roomba E1"/>
+      <column name="device_status" value="OFF"/>
+      <column name="device_type" value="VACUUM_CLEANER"/>
+      <column name="home" value="home_location_mock"/>
+    </insert>
+    <insert tableName="vacuum_cleaner">
+      <column name="id" valueSequenceNext="id_seq"/>
+      <column name="name" value="Roomba E2"/>
+      <column name="device_status" value="OFF"/>
+      <column name="device_type" value="VACUUM_CLEANER"/>
+      <column name="home" value="home_location_mock"/>
+    </insert>
+  </changeSet>
+
+</databaseChangeLog>

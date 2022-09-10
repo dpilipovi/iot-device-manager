@@ -1,0 +1,10 @@
+spring.datasource:
+  url: jdbc:postgresql://localhost:5432/iot-device-manager?ApplicationName=api
+  username: iot-device-manager
+  password: password
+
+spring.rabbitmq:
+  addresses: localhost
+  virtual-host: iot-device-manager
+  username: admin
+  password: password

@@ -4,6 +4,8 @@ server:
     include-binding-errors: always
 
 spring:
+  liquibase:
+    change-log: classpath:/liquibase/db/liquibase.xml
   jpa:
     hibernate.ddl-auto: update
     properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect

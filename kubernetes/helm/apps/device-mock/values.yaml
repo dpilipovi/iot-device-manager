@@ -1,5 +1,6 @@
 namespace: iot-device-manager
 replicas: 1
+activeProfiles: k8s
 applicationPort: 8180
 
 image:

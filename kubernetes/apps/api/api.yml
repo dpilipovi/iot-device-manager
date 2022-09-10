@@ -22,7 +22,7 @@ spec:
         prometheus.io/scheme: "http"
     spec:
       containers:
-        - image: dpilipovic98/iot-device-manager-api:0.0.1
+        - image: dpilipovic98/iot-device-manager-api-application:0.0.2
           name: api-application-application
           env:
             - name: SPRING_PROFILES_ACTIVE
@@ -51,6 +51,26 @@ spec:
                 secretKeyRef:
                   name: postgres-credentials
                   key: postgres_password
+            - name: RABBIT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: rabbit-conf
+                  key: host
+            - name: RABBIT_VHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: rabbit-conf
+                  key: vhost
+            - name: RABBIT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-credentials
+                  key: rabbit_user
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-credentials
+                  key: rabbit_password
           resources:
             requests:
               memory: "250Mi"

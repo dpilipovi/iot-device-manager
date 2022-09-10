@@ -22,7 +22,7 @@ spec:
         prometheus.io/scheme: "http"
     spec:
       containers:
-        - image: dpilipovic98/iot-device-manager-device-mock:0.0.1
+        - image: dpilipovic98/iot-device-manager-device-mock:0.0.2
           name: device-mock
           env:
             - name: SPRING_PROFILES_ACTIVE

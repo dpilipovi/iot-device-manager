@@ -1,11 +1,12 @@
 namespace: iot-device-manager
 replicas: 1
+activeProfiles: k8s
 applicationPort: 8080
 
 image:
   repository: dpilipovic98
   pullPolicy: IfNotPresent
-  tag: iot-device-manager-api
+  tag: iot-device-manager-api-application
 
 resources:
   requests:

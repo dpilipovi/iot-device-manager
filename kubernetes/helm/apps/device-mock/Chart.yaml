@@ -1,0 +1,4 @@
+apiVersion: v2
+name: device-mock
+version: 0.0.1
+appVersion: 0.0.1

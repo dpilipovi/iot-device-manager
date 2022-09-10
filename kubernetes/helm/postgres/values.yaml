@@ -1,0 +1,11 @@
+namespace: iot-device-manager
+
+image: postgres:14.5
+
+postgres:
+  user: aW90LWRldmljZS1tYW5hZ2Vy
+  password: aW90LWRldmljZS1tYW5hZ2Vy
+  host: postgre
+  name: iot-device-manager
+
+requestedStorage: 1Gi

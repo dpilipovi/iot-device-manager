@@ -1,0 +1,19 @@
+namespace: iot-device-manager
+replicas: 1
+applicationPort: 8180
+
+image:
+  repository: dpilipovic98
+  pullPolicy: IfNotPresent
+  tag: iot-device-manager-device-mock
+
+resources:
+  requests:
+    memory: "150Mi"
+    cpu: "150m"
+  limits:
+    memory: "250Mi"
+    cpu: "250m"
+
+ingress:
+  className: nginx-iot-device-manager

@@ -1,0 +1,8 @@
+namespace: iot-device-manager
+
+replicas: 1
+
+image:
+  repository: dpilipovic98
+  tag: iot-device-manager-rabbitmq
+

@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        tier: database
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image }}
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres_password
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-conf
+                  key: name
+          ports:
+            - containerPort: 5432
+              name: {{ .Chart.Name }}
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-persistance-storage
+      volumes:
+        - name: postgres-persistance-storage
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim

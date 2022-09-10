@@ -1,0 +1,19 @@
+namespace: iot-device-manager
+replicas: 1
+applicationPort: 8081
+
+image:
+  repository: dpilipovic98
+  pullPolicy: IfNotPresent
+  tag: iot-device-manager-message-processor
+
+resources:
+  requests:
+    memory: "250Mi"
+    cpu: "250m"
+  limits:
+    memory: "500Mi"
+    cpu: "500m"
+
+ingress:
+  className: nginx-iot-device-manager

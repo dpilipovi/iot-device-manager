@@ -31,26 +31,6 @@ spec:
               value: Europe/Zagreb
             - name: JAVA_TOOL_OPTIONS
               value: -XX:MaxRAMPercentage=90 -XX:InitialRAMPercentage=80 -XX:MinRAMPercentage=70
-            - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: postgres-conf
-                  key: host
-            - name: DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: postgres-conf
-                  key: name
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-credentials
-                  key: postgres_user
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-credentials
-                  key: postgres_password
           resources:
             requests:
               memory: "200Mi"

@@ -1,7 +1,1 @@
 management.endpoints.web.base-path: /device-mock/actuator
-
-spring.datasource:
-  driver-class-name: org.postgresql.Driver
-  url: jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}
-  username: ${POSTGRES_USER}
-  password: ${POSTGRES_PASSWORD}

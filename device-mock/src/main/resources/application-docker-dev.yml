@@ -1,4 +1,0 @@
-spring.datasource:
-  url: jdbc:postgresql://database:5432/iot-device-manager?ApplicationName=api
-  username: iot-device-manager
-  password: password

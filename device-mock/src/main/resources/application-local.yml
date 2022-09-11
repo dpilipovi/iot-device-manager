@@ -1,5 +1,0 @@
-spring.datasource:
-  url: jdbc:postgresql://localhost:5432/iot-device-manager?ApplicationName=device-mock
-  username: iot-device-manager
-  password: password
-

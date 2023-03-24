@@ -52,7 +52,7 @@ class AirConditionerActionControllerShould {
     mockMvc.perform(post("/api/device/air-conditioner/action/temperature")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(changeTemperatureRequestDto)))
-        .andExpectAll(status().isAccepted());
+        .andExpect(status().isAccepted());
   }
 
 }

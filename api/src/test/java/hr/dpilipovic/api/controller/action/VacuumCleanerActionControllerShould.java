@@ -1,6 +1,5 @@
 package hr.dpilipovic.api.controller.action;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import hr.dpilipovic.api.service.action.VacuumCleanerActionInitiatorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,6 @@ class VacuumCleanerActionControllerShould {
 
   @Autowired
   private MockMvc mockMvc;
-
-  @Autowired
-  private ObjectMapper objectMapper;
 
   @MockBean
   private VacuumCleanerActionInitiatorService vacuumCleanerActionInitiatorService;

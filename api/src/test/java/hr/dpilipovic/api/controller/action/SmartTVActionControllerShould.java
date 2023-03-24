@@ -52,7 +52,7 @@ class SmartTVActionControllerShould {
     mockMvc.perform(post("/api/device/smart-tv/action/recording/start")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(recordingRequestDto)))
-        .andExpectAll(status().isAccepted());
+        .andExpect(status().isAccepted());
   }
 
   @Test

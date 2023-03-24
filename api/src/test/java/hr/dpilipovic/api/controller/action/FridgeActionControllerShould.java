@@ -52,7 +52,7 @@ class FridgeActionControllerShould {
     mockMvc.perform(post("/api/device/fridge/action/temperature")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(changeTemperatureRequestDto)))
-        .andExpectAll(status().isAccepted());
+        .andExpect(status().isAccepted());
   }
 
 }

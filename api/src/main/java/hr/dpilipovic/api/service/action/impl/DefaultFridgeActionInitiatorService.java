@@ -20,29 +20,29 @@ public class DefaultFridgeActionInitiatorService implements FridgeActionInitiato
 
   @Override
   public void turnOn(final Long fridgeId) {
-    if (!fridgeService.fridgeExistsById(fridgeId)) {
-      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, fridgeId));
-    }
+    checkIfExists(fridgeId);
 
     rabbitTemplate.convertAndSend(rabbitQueueProperties.fridgePowerOnQueue(), fridgeId);
   }
 
   @Override
   public void turnOff(final Long fridgeId) {
-    if (!fridgeService.fridgeExistsById(fridgeId)) {
-      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, fridgeId));
-    }
+    checkIfExists(fridgeId);
 
     rabbitTemplate.convertAndSend(rabbitQueueProperties.fridgePowerOffQueue(), fridgeId);
   }
 
   @Override
   public void setTemperature(final ChangeTemperatureRequestDto changeTemperatureRequestDto) {
-    if (!fridgeService.fridgeExistsById(changeTemperatureRequestDto.getId())){
-      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, changeTemperatureRequestDto.getId()));
-    }
+    checkIfExists(changeTemperatureRequestDto.getId());
 
     rabbitTemplate.convertAndSend(rabbitQueueProperties.fridgeChangeTemperatureQueue(), changeTemperatureRequestDto);
+  }
+
+  private void checkIfExists(final Long fridgeId) {
+    if (!fridgeService.fridgeExistsById(fridgeId)) {
+      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, fridgeId));
+    }
   }
 
 }

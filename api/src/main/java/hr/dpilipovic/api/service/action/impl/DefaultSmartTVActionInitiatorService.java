@@ -20,56 +20,50 @@ public class DefaultSmartTVActionInitiatorService implements SmartTVActionInitia
 
   @Override
   public void turnOn(final Long smartTVId) {
-    if (!smartTVService.smartTVExistsById(smartTVId)) {
-      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, smartTVId));
-    }
-    
+    checkIfExists(smartTVId);
+
     rabbitTemplate.convertAndSend(rabbitQueueProperties.smartTVPowerOnQueue(), smartTVId);
   }
 
   @Override
   public void turnOff(final Long smartTVId) {
-    if (!smartTVService.smartTVExistsById(smartTVId)) {
-      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, smartTVId));
-    }
+    checkIfExists(smartTVId);
 
     rabbitTemplate.convertAndSend(rabbitQueueProperties.smartTVPowerOffQueue(), smartTVId);
   }
 
   @Override
   public void startRecording(final RecordingRequestDto recordingRequestDto) {
-    if (!smartTVService.smartTVExistsById(recordingRequestDto.getId())){
-      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, recordingRequestDto.getId()));
-    }
+    checkIfExists(recordingRequestDto.getId());
 
     rabbitTemplate.convertAndSend(rabbitQueueProperties.smartTVStartRecordingQueue(), recordingRequestDto);
   }
 
   @Override
   public void pauseRecording(final Long smartTVId) {
-    if (!smartTVService.smartTVExistsById(smartTVId)){
-      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, smartTVId));
-    }
+    checkIfExists(smartTVId);
 
     rabbitTemplate.convertAndSend(rabbitQueueProperties.smartTVPauseRecordingQueue(), smartTVId);
   }
 
   @Override
   public void resumeRecording(final Long smartTVId) {
-    if (!smartTVService.smartTVExistsById(smartTVId)){
-      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, smartTVId));
-    }
+    checkIfExists(smartTVId);
 
     rabbitTemplate.convertAndSend(rabbitQueueProperties.smartTVResumeRecordingQueue(), smartTVId);
   }
 
   @Override
   public void stopRecording(final Long smartTVId) {
-    if (!smartTVService.smartTVExistsById(smartTVId)){
-      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, smartTVId));
-    }
+    checkIfExists(smartTVId);
 
     rabbitTemplate.convertAndSend(rabbitQueueProperties.smartTVStopRecordingQueue(), smartTVId);
+  }
+
+  private void checkIfExists(final Long smartTVId) {
+    if (!smartTVService.smartTVExistsById(smartTVId)) {
+      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, smartTVId));
+    }
   }
 
 }

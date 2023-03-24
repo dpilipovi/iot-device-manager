@@ -20,29 +20,29 @@ public class DefaultAirConditionerActionInitiatorService implements AirCondition
 
   @Override
   public void turnOn(final Long airConditionerId) {
-    if (!airConditionerService.airConditionerExistsById(airConditionerId)) {
-      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, airConditionerId));
-    }
+    checkIfExists(airConditionerId);
 
     rabbitTemplate.convertAndSend(rabbitQueueProperties.airConditionerPowerOnQueue(), airConditionerId);
   }
 
   @Override
   public void turnOff(final Long airConditionerId) {
-    if (!airConditionerService.airConditionerExistsById(airConditionerId)) {
-      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, airConditionerId));
-    }
+    checkIfExists(airConditionerId);
 
     rabbitTemplate.convertAndSend(rabbitQueueProperties.airConditionerPowerOffQueue(), airConditionerId);
   }
 
   @Override
   public void setTemperature(final ChangeTemperatureRequestDto changeTemperatureRequestDto) {
-    if (!airConditionerService.airConditionerExistsById(changeTemperatureRequestDto.getId())){
-      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, changeTemperatureRequestDto.getId()));
-    }
+    checkIfExists(changeTemperatureRequestDto.getId());
 
     rabbitTemplate.convertAndSend(rabbitQueueProperties.airConditionerChangeTemperatureQueue(), changeTemperatureRequestDto);
+  }
+
+  private void checkIfExists(final Long airConditionerId) {
+    if (!airConditionerService.airConditionerExistsById(airConditionerId)) {
+      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, airConditionerId));
+    }
   }
 
 }

@@ -19,20 +19,22 @@ public class DefaultVacuumCleanerActionInitiatorService implements VacuumCleaner
 
   @Override
   public void turnOn(final Long vacuumCleanerId) {
-    if (!vacuumCleanerService.vacuumCleanerExistsById(vacuumCleanerId)){
-      throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, vacuumCleanerId));
-    }
+    checkIfExists(vacuumCleanerId);
 
     rabbitTemplate.convertAndSend(rabbitQueueProperties.vacuumCleanerPowerOnQueue(), vacuumCleanerId);
   }
 
   @Override
   public void turnOff(final Long vacuumCleanerId) {
+    checkIfExists(vacuumCleanerId);
+
+    rabbitTemplate.convertAndSend(rabbitQueueProperties.vacuumCleanerPowerOffQueue(), vacuumCleanerId);
+  }
+
+  private void checkIfExists(final Long vacuumCleanerId) {
     if (!vacuumCleanerService.vacuumCleanerExistsById(vacuumCleanerId)){
       throw new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, vacuumCleanerId));
     }
-
-    rabbitTemplate.convertAndSend(rabbitQueueProperties.vacuumCleanerPowerOffQueue(), vacuumCleanerId);
   }
 
 }

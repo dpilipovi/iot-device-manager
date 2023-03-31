@@ -1,6 +1,6 @@
 package hr.dpilipovic.api.service.action.impl;
 
-import hr.dpilipovic.api.service.action.VacuumCleanerActionInitiatorService;
+import hr.dpilipovic.api.service.action.VacuumCleanerPowerActionInitiatorService;
 import hr.dpilipovic.common.exception.EntityNotFoundException;
 import hr.dpilipovic.common.rabbit.configuration.RabbitQueueProperties;
 import hr.dpilipovic.common.service.VacuumCleanerService;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DefaultVacuumCleanerActionInitiatorService implements VacuumCleanerActionInitiatorService {
+public class DefaultVacuumCleanerPowerActionInitiatorService implements VacuumCleanerPowerActionInitiatorService {
 
+  private final RabbitTemplate rabbitTemplate;
   private final VacuumCleanerService vacuumCleanerService;
   private final RabbitQueueProperties rabbitQueueProperties;
-  private final RabbitTemplate rabbitTemplate;
   private static final String NOT_FOUND_MESSAGE = "Vacuum cleaner with ID %s not found";
 
   @Override

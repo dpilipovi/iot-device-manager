@@ -16,9 +16,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class DefaultFridgeActionInitiatorServiceShould {
+class DefaultFridgeTemperatureActionInitiatorServiceShould {
 
-  private DefaultFridgeActionInitiatorService defaultFridgeActionInitiatorService;
+  private DefaultFridgeTemperatureActionInitiatorService defaultFridgeTemperatureActionInitiatorService;
 
   @Mock
   private RabbitTemplate rabbitTemplate;
@@ -33,51 +33,7 @@ class DefaultFridgeActionInitiatorServiceShould {
 
   @BeforeEach
   public void setup() {
-    this.defaultFridgeActionInitiatorService = new DefaultFridgeActionInitiatorService(fridgeService, rabbitQueueProperties, rabbitTemplate);
-  }
-
-  @Test
-  void turnOn() {
-    final var fridgeId = 1L;
-    final var fridgePowerOnQueue = "fridge_power_on";
-
-    when(fridgeService.fridgeExistsById(fridgeId)).thenReturn(true);
-    when(rabbitQueueProperties.fridgePowerOnQueue()).thenReturn(fridgePowerOnQueue);
-
-    defaultFridgeActionInitiatorService.turnOn(fridgeId);
-
-    verify(rabbitTemplate).convertAndSend(fridgePowerOnQueue, fridgeId);
-  }
-
-  @Test
-  void throwEntityNotFoundException_whenTryingToTurnOnFridgeThatDoesNotExist() {
-    final var fridgeId = 1L;
-
-    assertThatThrownBy(() -> defaultFridgeActionInitiatorService.turnOn(fridgeId))
-        .isInstanceOf(EntityNotFoundException.class)
-        .hasMessage(String.format(NOT_FOUND_MESSAGE, fridgeId));
-  }
-
-  @Test
-  void turnOff() {
-    final var fridgeId = 1L;
-    final var fridgePowerOffQueue = "fridge_power_off";
-
-    when(fridgeService.fridgeExistsById(fridgeId)).thenReturn(true);
-    when(rabbitQueueProperties.fridgePowerOffQueue()).thenReturn(fridgePowerOffQueue);
-
-    defaultFridgeActionInitiatorService.turnOff(fridgeId);
-
-    verify(rabbitTemplate).convertAndSend(fridgePowerOffQueue, fridgeId);
-  }
-
-  @Test
-  void throwEntityNotFoundException_whenTryingToTurnOffFridgeThatDoesNotExist() {
-    final var fridgeId = 1L;
-
-    assertThatThrownBy(() -> defaultFridgeActionInitiatorService.turnOff(fridgeId))
-        .isInstanceOf(EntityNotFoundException.class)
-        .hasMessage(String.format(NOT_FOUND_MESSAGE, fridgeId));
+    this.defaultFridgeTemperatureActionInitiatorService = new DefaultFridgeTemperatureActionInitiatorService(fridgeService, rabbitTemplate, rabbitQueueProperties);
   }
 
   @Test
@@ -88,7 +44,7 @@ class DefaultFridgeActionInitiatorServiceShould {
     when(fridgeService.fridgeExistsById(changeTemperatureRequestDto.getId())).thenReturn(true);
     when(rabbitQueueProperties.fridgeChangeTemperatureQueue()).thenReturn(fridgeChangeTemperatureQueue);
 
-    defaultFridgeActionInitiatorService.setTemperature(changeTemperatureRequestDto);
+    defaultFridgeTemperatureActionInitiatorService.setTemperature(changeTemperatureRequestDto);
 
     verify(rabbitTemplate).convertAndSend(fridgeChangeTemperatureQueue, changeTemperatureRequestDto);
   }
@@ -97,7 +53,7 @@ class DefaultFridgeActionInitiatorServiceShould {
   void throwEntityNotFoundException_whenTryingToChangeTemperatureForFridgeThatDoesNotExist() {
     final var changeTemperatureRequestDto = ChangeTemperatureRequestDto.builder().id(1L).temperature(22).build();
 
-    assertThatThrownBy(() -> defaultFridgeActionInitiatorService.setTemperature(changeTemperatureRequestDto))
+    assertThatThrownBy(() -> defaultFridgeTemperatureActionInitiatorService.setTemperature(changeTemperatureRequestDto))
         .isInstanceOf(EntityNotFoundException.class)
         .hasMessage(String.format(NOT_FOUND_MESSAGE, changeTemperatureRequestDto.getId()));
   }

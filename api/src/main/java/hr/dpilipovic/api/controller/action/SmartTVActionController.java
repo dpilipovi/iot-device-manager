@@ -1,6 +1,6 @@
 package hr.dpilipovic.api.controller.action;
 
-import hr.dpilipovic.api.service.action.SmartTVActionInitiatorService;
+import hr.dpilipovic.api.facade.SmartTVActionInitiatorFacade;
 import hr.dpilipovic.common.dto.RecordingRequestDto;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,46 +16,46 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/device/smart-tv/action")
 public class SmartTVActionController {
 
-  private final SmartTVActionInitiatorService smartTVActionInitiatorService;
+  private final SmartTVActionInitiatorFacade smartTVActionInitiatorFacade;
 
   @PostMapping("/on/{smartTVId}")
   public ResponseEntity<Void> turnAirConditionerOn(@PathVariable final Long smartTVId) {
-    smartTVActionInitiatorService.turnOn(smartTVId);
+    smartTVActionInitiatorFacade.turnOn(smartTVId);
 
     return ResponseEntity.accepted().build();
   }
 
   @PostMapping("/off/{smartTVId}")
   public ResponseEntity<Void> turnAirConditionerOff(@PathVariable final Long smartTVId) {
-    smartTVActionInitiatorService.turnOff(smartTVId);
+    smartTVActionInitiatorFacade.turnOff(smartTVId);
 
     return ResponseEntity.accepted().build();
   }
 
   @PostMapping("/recording/start")
   public ResponseEntity<Void> startSmartTVRecording(@RequestBody @Valid final RecordingRequestDto recordingRequestDto) {
-    smartTVActionInitiatorService.startRecording(recordingRequestDto);
+    smartTVActionInitiatorFacade.startRecording(recordingRequestDto);
 
     return ResponseEntity.accepted().build();
   }
 
   @PostMapping("/recording/pause/{smartTVId}")
   public ResponseEntity<Void> pauseSmartTVRecording(@PathVariable final Long smartTVId) {
-    smartTVActionInitiatorService.pauseRecording(smartTVId);
+    smartTVActionInitiatorFacade.pauseRecording(smartTVId);
 
     return ResponseEntity.accepted().build();
   }
 
   @PostMapping("/recording/resume/{smartTVId}")
   public ResponseEntity<Void> resumeSmartTVRecording(@PathVariable final Long smartTVId) {
-    smartTVActionInitiatorService.resumeRecording(smartTVId);
+    smartTVActionInitiatorFacade.resumeRecording(smartTVId);
 
     return ResponseEntity.accepted().build();
   }
 
   @PostMapping("/recording/stop/{smartTVId}")
   public ResponseEntity<Void> stopSmartTVRecording(@PathVariable final Long smartTVId) {
-    smartTVActionInitiatorService.stopRecording(smartTVId);
+    smartTVActionInitiatorFacade.stopRecording(smartTVId);
 
     return ResponseEntity.accepted().build();
   }

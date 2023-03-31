@@ -1,7 +1,7 @@
 package hr.dpilipovic.api.controller.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hr.dpilipovic.api.service.action.SmartTVActionInitiatorService;
+import hr.dpilipovic.api.facade.SmartTVActionInitiatorFacade;
 import hr.dpilipovic.common.dto.RecordingRequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ class SmartTVActionControllerShould {
   private ObjectMapper objectMapper;
 
   @MockBean
-  private SmartTVActionInitiatorService smartTVActionInitiatorService;
+  private SmartTVActionInitiatorFacade smartTVActionInitiatorFacade;
 
   @Test
   void turnSmartTVOn() throws Exception {

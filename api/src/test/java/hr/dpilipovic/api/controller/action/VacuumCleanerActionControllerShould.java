@@ -1,6 +1,6 @@
 package hr.dpilipovic.api.controller.action;
 
-import hr.dpilipovic.api.service.action.VacuumCleanerActionInitiatorService;
+import hr.dpilipovic.api.service.action.VacuumCleanerPowerActionInitiatorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,7 +21,7 @@ class VacuumCleanerActionControllerShould {
   private MockMvc mockMvc;
 
   @MockBean
-  private VacuumCleanerActionInitiatorService vacuumCleanerActionInitiatorService;
+  private VacuumCleanerPowerActionInitiatorService vacuumCleanerPowerActionInitiatorService;
 
   @Test
   void turnVacuumCleanerOn() throws Exception {

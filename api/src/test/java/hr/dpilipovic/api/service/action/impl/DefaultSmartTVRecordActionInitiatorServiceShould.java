@@ -16,9 +16,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class DefaultSmartTVActionInitiatorServiceShould {
+class DefaultSmartTVRecordActionInitiatorServiceShould {
 
-  private DefaultSmartTVActionInitiatorService defaultSmartTVActionInitiatorService;
+  private DefaultSmartTVRecordActionInitiatorService defaultSmartTVRecordActionInitiatorService;
 
   @Mock
   private RabbitTemplate rabbitTemplate;
@@ -33,51 +33,7 @@ class DefaultSmartTVActionInitiatorServiceShould {
 
   @BeforeEach
   public void setup() {
-    this.defaultSmartTVActionInitiatorService = new DefaultSmartTVActionInitiatorService(smartTVService, rabbitQueueProperties, rabbitTemplate);
-  }
-
-  @Test
-  void turnOn() {
-    final var smartTVId = 1L;
-    final var queue = "smart_tv_power_on";
-
-    when(smartTVService.smartTVExistsById(smartTVId)).thenReturn(true);
-    when(rabbitQueueProperties.smartTVPowerOnQueue()).thenReturn(queue);
-
-    defaultSmartTVActionInitiatorService.turnOn(smartTVId);
-
-    verify(rabbitTemplate).convertAndSend(queue, smartTVId);
-  }
-
-  @Test
-  void throwEntityNotFoundException_whenTryingToTurnOnSmartTVThatDoesNotExist() {
-    final var smartTVId = 1L;
-
-    assertThatThrownBy(() -> defaultSmartTVActionInitiatorService.turnOn(smartTVId))
-        .isInstanceOf(EntityNotFoundException.class)
-        .hasMessage(String.format(NOT_FOUND_MESSAGE, smartTVId));
-  }
-
-  @Test
-  void turnOff() {
-    final var smartTVId = 1L;
-    final var queue = "smart_tv_power_off";
-
-    when(smartTVService.smartTVExistsById(smartTVId)).thenReturn(true);
-    when(rabbitQueueProperties.smartTVPowerOffQueue()).thenReturn(queue);
-
-    defaultSmartTVActionInitiatorService.turnOff(smartTVId);
-
-    verify(rabbitTemplate).convertAndSend(queue, smartTVId);
-  }
-
-  @Test
-  void throwEntityNotFoundException_whenTryingToTurnOffSmartTVThatDoesNotExist() {
-    final var smartTVId = 1L;
-
-    assertThatThrownBy(() -> defaultSmartTVActionInitiatorService.turnOff(smartTVId))
-        .isInstanceOf(EntityNotFoundException.class)
-        .hasMessage(String.format(NOT_FOUND_MESSAGE, smartTVId));
+    this.defaultSmartTVRecordActionInitiatorService = new DefaultSmartTVRecordActionInitiatorService(smartTVService, rabbitTemplate, rabbitQueueProperties);
   }
 
   @Test
@@ -88,7 +44,7 @@ class DefaultSmartTVActionInitiatorServiceShould {
     when(smartTVService.smartTVExistsById(recordingRequestDto.getId())).thenReturn(true);
     when(rabbitQueueProperties.smartTVStartRecordingQueue()).thenReturn(queue);
 
-    defaultSmartTVActionInitiatorService.startRecording(recordingRequestDto);
+    defaultSmartTVRecordActionInitiatorService.startRecording(recordingRequestDto);
 
     verify(rabbitTemplate).convertAndSend(queue, recordingRequestDto);
   }
@@ -97,7 +53,7 @@ class DefaultSmartTVActionInitiatorServiceShould {
   void throwEntityNotFoundException_whenTryingStartRecording_whenSmartTVThatDoesNotExist() {
     final var recordingRequestDto = RecordingRequestDto.builder().id(1L).channel(1).build();
 
-    assertThatThrownBy(() -> defaultSmartTVActionInitiatorService.startRecording(recordingRequestDto))
+    assertThatThrownBy(() -> defaultSmartTVRecordActionInitiatorService.startRecording(recordingRequestDto))
         .isInstanceOf(EntityNotFoundException.class)
         .hasMessage(String.format(NOT_FOUND_MESSAGE, recordingRequestDto.getId()));
   }
@@ -110,7 +66,7 @@ class DefaultSmartTVActionInitiatorServiceShould {
     when(smartTVService.smartTVExistsById(smartTVId)).thenReturn(true);
     when(rabbitQueueProperties.smartTVPauseRecordingQueue()).thenReturn(queue);
 
-    defaultSmartTVActionInitiatorService.pauseRecording(smartTVId);
+    defaultSmartTVRecordActionInitiatorService.pauseRecording(smartTVId);
 
     verify(rabbitTemplate).convertAndSend(queue, smartTVId);
   }
@@ -119,7 +75,7 @@ class DefaultSmartTVActionInitiatorServiceShould {
   void throwEntityNotFoundException_whenTryingToPauseRecording_whenSmartTVThatDoesNotExist() {
     final var smartTVId = 1L;
 
-    assertThatThrownBy(() -> defaultSmartTVActionInitiatorService.pauseRecording(smartTVId))
+    assertThatThrownBy(() -> defaultSmartTVRecordActionInitiatorService.pauseRecording(smartTVId))
         .isInstanceOf(EntityNotFoundException.class)
         .hasMessage(String.format(NOT_FOUND_MESSAGE, smartTVId));
   }
@@ -132,7 +88,7 @@ class DefaultSmartTVActionInitiatorServiceShould {
     when(smartTVService.smartTVExistsById(smartTVId)).thenReturn(true);
     when(rabbitQueueProperties.smartTVResumeRecordingQueue()).thenReturn(queue);
 
-    defaultSmartTVActionInitiatorService.resumeRecording(smartTVId);
+    defaultSmartTVRecordActionInitiatorService.resumeRecording(smartTVId);
 
     verify(rabbitTemplate).convertAndSend(queue, smartTVId);
   }
@@ -141,7 +97,7 @@ class DefaultSmartTVActionInitiatorServiceShould {
   void throwEntityNotFoundException_whenTryingResumeRecording_whenSmartTVThatDoesNotExist() {
     final var smartTVId = 1L;
 
-    assertThatThrownBy(() -> defaultSmartTVActionInitiatorService.resumeRecording(smartTVId))
+    assertThatThrownBy(() -> defaultSmartTVRecordActionInitiatorService.resumeRecording(smartTVId))
         .isInstanceOf(EntityNotFoundException.class)
         .hasMessage(String.format(NOT_FOUND_MESSAGE, smartTVId));
   }
@@ -154,7 +110,7 @@ class DefaultSmartTVActionInitiatorServiceShould {
     when(smartTVService.smartTVExistsById(smartTVId)).thenReturn(true);
     when(rabbitQueueProperties.smartTVStopRecordingQueue()).thenReturn(queue);
 
-    defaultSmartTVActionInitiatorService.stopRecording(smartTVId);
+    defaultSmartTVRecordActionInitiatorService.stopRecording(smartTVId);
 
     verify(rabbitTemplate).convertAndSend(queue, smartTVId);
   }
@@ -163,7 +119,7 @@ class DefaultSmartTVActionInitiatorServiceShould {
   void throwEntityNotFoundException_whenTryingStopRecording_whenSmartTVThatDoesNotExist() {
     final var smartTVId = 1L;
 
-    assertThatThrownBy(() -> defaultSmartTVActionInitiatorService.stopRecording(smartTVId))
+    assertThatThrownBy(() -> defaultSmartTVRecordActionInitiatorService.stopRecording(smartTVId))
         .isInstanceOf(EntityNotFoundException.class)
         .hasMessage(String.format(NOT_FOUND_MESSAGE, smartTVId));
   }

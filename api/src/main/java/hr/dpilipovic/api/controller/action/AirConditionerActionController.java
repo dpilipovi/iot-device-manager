@@ -1,6 +1,6 @@
 package hr.dpilipovic.api.controller.action;
 
-import hr.dpilipovic.api.service.action.AirConditionerActionInitiatorService;
+import hr.dpilipovic.api.facade.AirConditionerActionInitiatorFacade;
 import hr.dpilipovic.common.dto.ChangeTemperatureRequestDto;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,25 +16,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/device/air-conditioner/action")
 public class AirConditionerActionController {
 
-  private final AirConditionerActionInitiatorService airConditionerActionInitiatorService;
+  private final AirConditionerActionInitiatorFacade airConditionerActionInitiatorFacade;
 
   @PostMapping("/on/{airConditionerId}")
   public ResponseEntity<Void> turnAirConditionerOn(@PathVariable final Long airConditionerId) {
-    airConditionerActionInitiatorService.turnOn(airConditionerId);
+    airConditionerActionInitiatorFacade.turnOn(airConditionerId);
 
     return ResponseEntity.accepted().build();
   }
 
   @PostMapping("/off/{airConditionerId}")
   public ResponseEntity<Void> turnAirConditionerOff(@PathVariable final Long airConditionerId) {
-    airConditionerActionInitiatorService.turnOff(airConditionerId);
+    airConditionerActionInitiatorFacade.turnOff(airConditionerId);
 
     return ResponseEntity.accepted().build();
   }
 
   @PostMapping("/temperature")
   public ResponseEntity<Void> changeAirConditionerTemperature(@RequestBody @Valid final ChangeTemperatureRequestDto changeTemperatureRequestDto) {
-    airConditionerActionInitiatorService.setTemperature(changeTemperatureRequestDto);
+    airConditionerActionInitiatorFacade.setTemperature(changeTemperatureRequestDto);
 
     return ResponseEntity.accepted().build();
   }

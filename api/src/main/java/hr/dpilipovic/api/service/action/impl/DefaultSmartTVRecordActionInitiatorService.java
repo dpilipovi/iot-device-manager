@@ -1,6 +1,6 @@
 package hr.dpilipovic.api.service.action.impl;
 
-import hr.dpilipovic.api.service.action.SmartTVActionInitiatorService;
+import hr.dpilipovic.api.service.action.SmartTVRecordActionInitiatorService;
 import hr.dpilipovic.common.dto.RecordingRequestDto;
 import hr.dpilipovic.common.exception.EntityNotFoundException;
 import hr.dpilipovic.common.rabbit.configuration.RabbitQueueProperties;
@@ -11,26 +11,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DefaultSmartTVActionInitiatorService implements SmartTVActionInitiatorService {
+public class DefaultSmartTVRecordActionInitiatorService implements SmartTVRecordActionInitiatorService {
 
   private final SmartTVService smartTVService;
-  private final RabbitQueueProperties rabbitQueueProperties;
   private final RabbitTemplate rabbitTemplate;
+  private final RabbitQueueProperties rabbitQueueProperties;
   private static final String NOT_FOUND_MESSAGE = "Smart TV with ID %s not found";
-
-  @Override
-  public void turnOn(final Long smartTVId) {
-    checkIfExists(smartTVId);
-
-    rabbitTemplate.convertAndSend(rabbitQueueProperties.smartTVPowerOnQueue(), smartTVId);
-  }
-
-  @Override
-  public void turnOff(final Long smartTVId) {
-    checkIfExists(smartTVId);
-
-    rabbitTemplate.convertAndSend(rabbitQueueProperties.smartTVPowerOffQueue(), smartTVId);
-  }
 
   @Override
   public void startRecording(final RecordingRequestDto recordingRequestDto) {

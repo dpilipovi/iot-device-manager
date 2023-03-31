@@ -1,7 +1,7 @@
 package hr.dpilipovic.api.controller.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hr.dpilipovic.api.service.action.FridgeActionInitiatorService;
+import hr.dpilipovic.api.facade.FridgeActionInitiatorFacade;
 import hr.dpilipovic.common.dto.ChangeTemperatureRequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ class FridgeActionControllerShould {
   private ObjectMapper objectMapper;
 
   @MockBean
-  private FridgeActionInitiatorService fridgeActionInitiatorService;
+  private FridgeActionInitiatorFacade fridgeActionInitiatorFacade;
 
   @Test
   void turnFridgeOn() throws Exception {

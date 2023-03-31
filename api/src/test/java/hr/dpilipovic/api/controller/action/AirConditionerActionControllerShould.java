@@ -1,7 +1,7 @@
 package hr.dpilipovic.api.controller.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hr.dpilipovic.api.service.action.AirConditionerActionInitiatorService;
+import hr.dpilipovic.api.facade.AirConditionerActionInitiatorFacade;
 import hr.dpilipovic.common.dto.ChangeTemperatureRequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ class AirConditionerActionControllerShould {
   private ObjectMapper objectMapper;
 
   @MockBean
-  private AirConditionerActionInitiatorService airConditionerActionInitiatorService;
+  private AirConditionerActionInitiatorFacade airConditionerActionInitiatorFacade;
 
   @Test
   void turnAirConditionerOn() throws Exception {

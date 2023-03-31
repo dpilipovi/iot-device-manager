@@ -1,6 +1,6 @@
 package hr.dpilipovic.api.controller.action;
 
-import hr.dpilipovic.api.service.action.FridgeActionInitiatorService;
+import hr.dpilipovic.api.facade.FridgeActionInitiatorFacade;
 import hr.dpilipovic.common.dto.ChangeTemperatureRequestDto;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,25 +16,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/device/fridge/action")
 public class FridgeActionController {
 
-  private final FridgeActionInitiatorService fridgeActionInitiatorService;
+  private final FridgeActionInitiatorFacade fridgeActionInitiatorFacade;
 
   @PostMapping("/on/{fridgeId}")
   public ResponseEntity<Void> turnFridgeOn(@PathVariable final Long fridgeId) {
-    fridgeActionInitiatorService.turnOn(fridgeId);
+    fridgeActionInitiatorFacade.turnOn(fridgeId);
 
     return ResponseEntity.accepted().build();
   }
 
   @PostMapping("/off/{fridgeId}")
   public ResponseEntity<Void> turnFridgeOff(@PathVariable final Long fridgeId) {
-    fridgeActionInitiatorService.turnOff(fridgeId);
+    fridgeActionInitiatorFacade.turnOff(fridgeId);
 
     return ResponseEntity.accepted().build();
   }
 
   @PostMapping("/temperature")
   public ResponseEntity<Void> changeFridgeTemperature(@RequestBody @Valid final ChangeTemperatureRequestDto changeTemperatureRequestDto) {
-    fridgeActionInitiatorService.setTemperature(changeTemperatureRequestDto);
+    fridgeActionInitiatorFacade.setTemperature(changeTemperatureRequestDto);
 
     return ResponseEntity.accepted().build();
   }

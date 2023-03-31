@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class DefaultVacuumCleanerActionInitiatorServiceShould {
 
-  private DefaultVacuumCleanerActionInitiatorService defaultVacuumCleanerActionInitiatorService;
+  private DefaultVacuumCleanerPowerActionInitiatorService defaultVacuumCleanerActionInitiatorService;
 
   @Mock
   private RabbitTemplate rabbitTemplate;
@@ -32,7 +32,8 @@ class DefaultVacuumCleanerActionInitiatorServiceShould {
 
   @BeforeEach
   public void setup() {
-    this.defaultVacuumCleanerActionInitiatorService = new DefaultVacuumCleanerActionInitiatorService(vacuumCleanerService, rabbitQueueProperties, rabbitTemplate);
+    this.defaultVacuumCleanerActionInitiatorService =
+        new DefaultVacuumCleanerPowerActionInitiatorService(rabbitTemplate, vacuumCleanerService, rabbitQueueProperties);
   }
 
   @Test
